@@ -1,2 +1,3 @@
 # CNN-SR
-A tensorflow-based implementation of CNN for image super-resolution
+A tensorflow-based implementation of CNN for image super-resolution   
+简易版本，改进中……

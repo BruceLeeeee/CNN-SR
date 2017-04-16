@@ -44,7 +44,7 @@ class Net(object):
 
         self.loss = tf.reduce_sum(tf.nn.l2_loss(tf.subtract(self.output_tensor, hr_images)))
 
-        #tf.summary.scalar('loss', self.loss)
+
 
 
 
