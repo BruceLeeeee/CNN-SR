@@ -10,11 +10,10 @@ from random import shuffle
 
 class DataSet(object):
     def __init__(self, images_list_path, num_epoch, batch_size):
-        self.image_list = self.get_image_list(images_list_path)
-        shuffle(self.image_list)
+        self.image_list= self.__get_image_list(images_list_path)
         self.total_sample = len(self.image_list)
 
-    def get_image_list(self, data_path):
+    def __get_image_list(self, data_path):
         l = glob.glob(os.path.join(data_path, "*"))
         print(len(l))
         l = [f for f in l if re.search("^\d+.mat$", os.path.basename(f))]
