@@ -9,7 +9,8 @@ class Net(object):
     def __init__(self, hr_images, lr_images, scope):
         self.weights = []
         self.biases = []
-        self.__construct_net(hr_images, lr_images)
+        with tf.variable_scope(scope):
+            self.__construct_net(hr_images, lr_images)
 
     def __construct_net(self, hr_images, lr_images):
         input_tensor = lr_images

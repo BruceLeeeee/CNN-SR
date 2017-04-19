@@ -125,8 +125,8 @@ class Solver(object):
                 gt_img = scipy.io.loadmat(image_list[i][0])['patch'].reshape([self.img_size_0, self.img_size_1, 1])
                 sess.run(enqueue_op, feed_dict={self.queue_lr: input_img, self.queue_hr: gt_img})
                 count += 1
-                if count % 100 == 0:
-                    print("[thread:", idx, "]", "enqueue...", count)
+                #if count % 100 == 0:
+                    #print("[thread:", idx, "]", "enqueue...", count)
         except Exception as e:
             print("stopping...", idx, e)
 
