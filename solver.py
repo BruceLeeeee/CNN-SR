@@ -38,26 +38,19 @@ class Solver(object):
                                  [[self.img_size_0, self.img_size_1, 1], [self.img_size_0, self.img_size_0, 1]])
             self.enqueue_op = queue.enqueue([self.queue_lr, self.queue_hr])
             train_input, train_gt = queue.dequeue_many(self.batch_size)
-
-        if conf.use_gpu:
-            device_str = '/gpu:0'
+            self.net = Net(train_input, train_gt, 'cnn_sr')
         else:
-            device_str = '/cpu:0'
-        with tf.device(device_str):
-            if self.use_queue_loading:
-                self.net = Net(train_input, train_gt, 'cnn_sr')
-            else:
-                self.train_input = tf.placeholder(tf.float32, shape=(self.batch_size, self.img_size_0, self.img_size_1, 1))
-                self.train_gt = tf.placeholder(tf.float32, shape=(self.batch_size, self.img_size_0, self.img_size_1, 1))
-                self.net = Net(self.train_input, self.train_gt, 'cnn_sr')
+            self.train_input = tf.placeholder(tf.float32, shape=(self.batch_size, self.img_size_0, self.img_size_1, 1))
+            self.train_gt = tf.placeholder(tf.float32, shape=(self.batch_size, self.img_size_0, self.img_size_1, 1))
+            self.net = Net(self.train_input, self.train_gt, 'cnn_sr')
 
-            # optimizer
-            self.global_step = tf.get_variable('global_step', [], initializer=tf.constant_initializer(0),
-                                               trainable=False)
-            learning_rate = tf.train.exponential_decay(self.learning_rate, self.global_step,
-                                                       500000, 0.5, staircase=True)
-            optimizer = tf.train.AdamOptimizer(learning_rate, beta1=0.9, beta2=0.999, epsilon=1e-8)
-            self.train_op = optimizer.minimize(self.net.loss, global_step=self.global_step)
+        # optimizer
+        self.global_step = tf.get_variable('global_step', [], initializer=tf.constant_initializer(0),
+                                            trainable=False)
+        learning_rate = tf.train.exponential_decay(self.learning_rate, self.global_step,
+                                                    500000, 0.5, staircase=True)
+        optimizer = tf.train.AdamOptimizer(learning_rate, beta1=0.9, beta2=0.999, epsilon=1e-8)
+        self.train_op = optimizer.minimize(self.net.loss, global_step=self.global_step)
 
 
 

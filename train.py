@@ -6,7 +6,7 @@ flags = tf.app.flags
 #solver
 flags.DEFINE_string("train_dir", "./models", "trained model save path")
 flags.DEFINE_string("imgs_list_path", "./data/train5/", "images list file path")
-flags.DEFINE_boolean("use_gpu", True, "whether to use gpu for training")
+#flags.DEFINE_boolean("use_gpu", True, "whether to use gpu for training")
 flags.DEFINE_boolean("use_queue_loading", True, "whether to use_queue_loading")
 flags.DEFINE_integer("num_epoch", 10, "train epoch num")
 flags.DEFINE_integer("batch_size", 128, "batch_size")

@@ -40,7 +40,7 @@ class Net(object):
         for w in self.weights:
             self.loss += tf.nn.l2_loss(w) * 1e-4
 
-    def __get_weights(shape):
+    def __get_weights(self, shape):
         return tf.Variable(tf.truncated_normal(shape, mean=0., stddev=.1), dtype=tf.float32)
 
     def __conv_layer(self, inputs, filters_shape, name, activation=tf.nn.relu):
