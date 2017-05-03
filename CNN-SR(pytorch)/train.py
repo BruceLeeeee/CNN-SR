@@ -1,4 +1,5 @@
 import os
+import argparse
 from __future__ import print_function
 
 import torch
@@ -8,10 +9,11 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 
 from model import Net
+from data import dataSet
 
 
 def main():
-    data_set = ""
+    data_set = dataSet("data/train91/")
     train_data_loader = DataLoader(dataset=data_set, num_workers=4, batch_size=64, shuffle=True)
     model = Net()
     criterion = nn.MSELoss(size_average=False)
