@@ -1,6 +1,5 @@
-import os
-import argparse
 from __future__ import print_function
+import os
 
 import torch
 import torch.optim as optim
@@ -9,11 +8,11 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 
 from model import Net
-from data import dataSet
+from data import DataSet
 
 
 def main():
-    data_set = dataSet("data/train91/")
+    data_set = DataSet("data/train5/")
     train_data_loader = DataLoader(dataset=data_set, num_workers=4, batch_size=64, shuffle=True)
     model = Net()
     criterion = nn.MSELoss(size_average=False)
@@ -34,7 +33,7 @@ def train(train_data_loader, model, criterion, optimizer, epoch):
     for iter, train_data_batch in enumerate(train_data_loader, 1):
         lr_img, hr_img = Variable(train_data_batch[0]), Variable(train_data_batch[1], requires_grad=False)
         if torch.cuda.is_available():
-            lr_img, hr_img = lr_img.cuda(), hr_img.cude()
+            lr_img, hr_img = lr_img.cuda(), hr_img.cuda()
 
         loss = criterion(model(lr_img), hr_img)
         optimizer.zero_grad()
